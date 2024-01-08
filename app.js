@@ -1,7 +1,9 @@
 import express from "express";
-import ProductManager from "./src/components/ProductManager.js";
+import ProductManager from "./src/controllers/ProductManager.js";
 
 const app = express();
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const products = new ProductManager();
@@ -29,6 +31,24 @@ app.get("/products/:pid", async (req, res) => {
         res.send({ error: "Product not found" });
     } else {
         res.send(product);
+    }
+});
+
+app.post("/products", async (req, res) => {
+    try {
+        const newProduct = req.body;
+        const addedProduct = await products.addProduct(
+            newProduct.title,
+            newProduct.description,
+            newProduct.price,
+            newProduct.thumbnail,
+            newProduct.code,
+            newProduct.stock
+        );
+        res.send(addedProduct);
+    } catch (error) {
+        console.error(`Error while processing request: ${error}`);
+        res.status(500).send("Internal Server Error");
     }
 });
 
