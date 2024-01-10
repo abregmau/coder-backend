@@ -26,7 +26,7 @@ app.get("/products", async (req, res) => {
 });
 
 app.get("/products/:pid", async (req, res) => {
-    let product = await products.getProductById(parseInt(req.params.pid));
+    let product = await products.getProductById(req.params.pid);
     if (!product) {
         res.send({ error: "Product not found" });
     } else {
@@ -46,6 +46,29 @@ app.post("/products", async (req, res) => {
             newProduct.stock
         );
         res.send(addedProduct);
+    } catch (error) {
+        console.error(`Error while processing request: ${error}`);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.delete("/products/:pid", async (req, res) => {
+    try {
+        const deletedProduct = await products.deleteProduct(req.params.pid);
+        res.send(deletedProduct);
+    } catch (error) {
+        console.error(`Error while processing request: ${error}`);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.put("/products/:pid", async (req, res) => {
+    try {
+        const modifiedProduct = await products.updateProduct(
+            req.params.pid,
+            req.body
+        );
+        res.send(modifiedProduct);
     } catch (error) {
         console.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
