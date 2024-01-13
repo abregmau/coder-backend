@@ -1,10 +1,10 @@
 import { Router } from "express";
 import CartManager from "../controllers/CartManager.js";
 
-const cartsRouter = Router();
+const cartRouter = Router();
 const carts = new CartManager();
 
-cartsRouter.get("/", async (req, res) => {
+cartRouter.get("/", async (req, res) => {
     try {
         const readCarts = await carts.getCarts();
         res.send(readCarts);
@@ -14,7 +14,7 @@ cartsRouter.get("/", async (req, res) => {
     }
 });
 
-cartsRouter.get("/:cid", async (req, res) => {
+cartRouter.get("/:cid", async (req, res) => {
     let cart = await carts.getCartById(req.params.cid);
     if (!cart) {
         res.send({ error: "Cart not found" });
@@ -23,7 +23,7 @@ cartsRouter.get("/:cid", async (req, res) => {
     }
 });
 
-cartsRouter.post("/", async (req, res) => {
+cartRouter.post("/", async (req, res) => {
     try {
         // const newCart = req.body;
         const addedCart = await carts.addCart();
@@ -34,7 +34,7 @@ cartsRouter.post("/", async (req, res) => {
     }
 });
 
-cartsRouter.post("/:cid/products/:pid", async (req, res) => {
+cartRouter.post("/:cid/products/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params;
         const addedProduct = await carts.addProductToCart(cid, pid);
@@ -45,7 +45,7 @@ cartsRouter.post("/:cid/products/:pid", async (req, res) => {
     }
 });
 
-cartsRouter.delete("/:cid/products/:pid", async (req, res) => {
+cartRouter.delete("/:cid/products/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params;
         const deletedProduct = await carts.delProductFromCart(cid, pid);
@@ -56,4 +56,4 @@ cartsRouter.delete("/:cid/products/:pid", async (req, res) => {
     }
 });
 
-export default cartsRouter;
+export { carts, cartRouter };

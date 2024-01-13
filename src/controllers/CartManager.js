@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
+import { products } from "../router/product.routes.js";
 
 export default class CartManager {
     constructor() {
@@ -63,6 +64,12 @@ export default class CartManager {
 
     addProductToCart = async (cid, pid) => {
         await this.checkLoadedFile();
+
+        let checkId = await products.getProductById(pid);
+        if (checkId === "Product not found") {
+            return "Product not found in database";
+        }
+
         const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
         if (cartIndex === -1) {
             return "Cart not found";
@@ -76,6 +83,7 @@ export default class CartManager {
                 return "Successfully added product";
             } else {
                 this.carts[cartIndex].products[productIndex].quantity++;
+                await this.writeCartsToFile();
                 return "Successfully increased quantity";
             }
         }

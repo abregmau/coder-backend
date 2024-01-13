@@ -71,4 +71,4 @@ productRouter.put("/:pid", async (req, res) => {
     }
 });
 
-export default productRouter;
+export { products, productRouter };
