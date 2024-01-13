@@ -12,4 +12,5 @@ Backend Project - Coder House
 
 # Test
 
-https://coder-backend-hizt.onrender.com/products
+https://coder-backend-hizt.onrender.com/api/products
+https://coder-backend-hizt.onrender.com/api/carts
