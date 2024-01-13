@@ -18,14 +18,17 @@ export default class ProductManager {
                 await this.writeProductsToFile();
                 return "File did not exist, created an empty one";
             } else {
-                throw error;
+                return error;
             }
         }
     };
 
     writeProductsToFile = async () => {
-        await fs.writeFile(this.patch, JSON.stringify(this.products));
-        return "Successfully wrote products";
+        try {
+            await fs.writeFile(this.patch, JSON.stringify(this.products));
+        } catch (error) {
+            return error;
+        }
     };
 
     checkLoadedFile = async () => {
