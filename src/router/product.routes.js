@@ -16,7 +16,7 @@ productRouter.get("/", async (req, res) => {
             res.send(productsLimit);
         }
     } catch (error) {
-        console.error(`Error while processing request: ${error}`);
+        logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -43,7 +43,7 @@ productRouter.post("/", async (req, res) => {
         );
         res.send(addedProduct);
     } catch (error) {
-        console.error(`Error while processing request: ${error}`);
+        logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -53,7 +53,7 @@ productRouter.delete("/:pid", async (req, res) => {
         const deletedProduct = await products.deleteProduct(req.params.pid);
         res.send(deletedProduct);
     } catch (error) {
-        console.error(`Error while processing request: ${error}`);
+        logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -66,7 +66,7 @@ productRouter.put("/:pid", async (req, res) => {
         );
         res.send(modifiedProduct);
     } catch (error) {
-        console.error(`Error while processing request: ${error}`);
+        logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
     }
 });

@@ -18,6 +18,6 @@ app.use("/api/carts", cartRouter);
 
 const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => {
-    console.log(`Server Listening in port: ${server.address().port}`);
+    logger.info(`Server Listening in port: ${server.address().port}`);
 });
-server.on("error", (error) => console.log(`Server error: ${error}`));
+server.on("error", (error) => logger.error(`Server error: ${error}`));
