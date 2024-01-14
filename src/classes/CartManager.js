@@ -48,9 +48,9 @@ export default class CartManager {
         await this.checkLoadedFile();
         const cartId = this.carts.find((cart) => cart.id === id);
         if (cartId) {
-            return cartId;
+            return { status: true, cart: cartId };
         } else {
-            return "Cart not found";
+            return { status: false, message: "Cart not found" };
         }
     };
 
@@ -66,13 +66,13 @@ export default class CartManager {
         await this.checkLoadedFile();
 
         let checkId = await products.getProductById(pid);
-        if (checkId === "Product not found") {
-            return "Product not found in database";
+        if (checkId.status === false) {
+            return { status: false, message: "Product not found in database" };
         }
 
         const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
         if (cartIndex === -1) {
-            return "Cart not found";
+            return { status: false, message: "Cart not found" };
         } else {
             const productIndex = this.carts[cartIndex].products.findIndex(
                 (product) => product.id === pid
@@ -80,11 +80,14 @@ export default class CartManager {
             if (productIndex === -1) {
                 this.carts[cartIndex].products.push({ id: pid, quantity: 1 });
                 await this.writeCartsToFile();
-                return "Successfully added product";
+                return { status: true, message: "Successfully added product" };
             } else {
                 this.carts[cartIndex].products[productIndex].quantity++;
                 await this.writeCartsToFile();
-                return "Successfully increased quantity";
+                return {
+                    status: true,
+                    message: "Successfully increased quantity",
+                };
             }
         }
     };
@@ -93,17 +96,20 @@ export default class CartManager {
         await this.checkLoadedFile();
         const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
         if (cartIndex === -1) {
-            return "Cart not found";
+            return { status: false, message: "Cart not found" };
         } else {
             const productIndex = this.carts[cartIndex].products.findIndex(
                 (product) => product.id === pid
             );
             if (productIndex === -1) {
-                return "Product not found";
+                return { status: false, message: "Product not found" };
             } else {
                 this.carts[cartIndex].products.splice(productIndex, 1);
                 await this.writeCartsToFile();
-                return "Successfully deleted product";
+                return {
+                    status: true,
+                    message: "Successfully deleted product",
+                };
             }
         }
     };

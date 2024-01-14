@@ -23,10 +23,10 @@ productRouter.get("/", async (req, res) => {
 
 productRouter.get("/:pid", async (req, res) => {
     let product = await products.getProductById(req.params.pid);
-    if (!product) {
-        res.send({ error: "Product not found" });
+    if (product.status === true) {
+        res.send(product.product);
     } else {
-        res.send(product);
+        res.status(400).send(product.message);
     }
 });
 
@@ -41,7 +41,11 @@ productRouter.post("/", async (req, res) => {
             newProduct.code,
             newProduct.stock
         );
-        res.send(addedProduct);
+        if (addedProduct.status === true) {
+            res.send(addedProduct.message);
+        } else {
+            res.status(400).send(addedProduct.message);
+        }
     } catch (error) {
         logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
@@ -51,7 +55,11 @@ productRouter.post("/", async (req, res) => {
 productRouter.delete("/:pid", async (req, res) => {
     try {
         const deletedProduct = await products.deleteProduct(req.params.pid);
-        res.send(deletedProduct);
+        if (deletedProduct.status === true) {
+            res.send(deletedProduct.message);
+        } else {
+            res.status(400).send(deletedProduct.message);
+        }
     } catch (error) {
         logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");
@@ -64,7 +72,11 @@ productRouter.put("/:pid", async (req, res) => {
             req.params.pid,
             req.body
         );
-        res.send(modifiedProduct);
+        if (modifiedProduct.status === true) {
+            res.send(modifiedProduct.message);
+        } else {
+            res.status(400).send(modifiedProduct.message);
+        }
     } catch (error) {
         logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");

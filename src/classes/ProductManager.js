@@ -46,26 +46,44 @@ export default class ProductManager {
         await this.checkLoadedFile();
         const productId = this.products.find((product) => product.id === id);
         if (productId) {
-            return productId;
+            return { status: true, product: productId };
         } else {
-            return "Product not found";
+            return { status: false, message: "Product not found" };
         }
     };
 
     addProduct = async (title, description, price, thumbnail, code, stock) => {
         await this.checkLoadedFile();
+
+        // Validations
+        if (
+            !title ||
+            !description ||
+            !price ||
+            !thumbnail ||
+            !code ||
+            isNaN(price) ||
+            isNaN(stock)
+        ) {
+            return {
+                status: false,
+                message:
+                    "Error: All fields are mandatory, and 'price' and 'stock' must be numbers.",
+            };
+        }
+
         let newProduct = {
             title,
             description,
-            price,
+            price: parseFloat(price), // Convert to a number
             thumbnail,
             code,
-            stock,
+            stock: parseInt(stock), // Convert to an integer
             id: nanoid(8),
         };
         this.products.push(newProduct);
         await this.writeProductsToFile();
-        return "Successfully added product";
+        return { status: true, message: "Successfully added product" };
     };
 
     updateProduct = async (id, modifiedProduct) => {
@@ -79,9 +97,9 @@ export default class ProductManager {
                 ...modifiedProduct,
             };
             await this.writeProductsToFile();
-            return "Successfully updated product";
+            return { status: true, message: "Successfully updated product" };
         } else {
-            return "Product not found";
+            return { status: false, message: "Product not found" };
         }
     };
 
@@ -92,9 +110,9 @@ export default class ProductManager {
                 (product) => product.id !== id
             );
             await this.writeProductsToFile();
-            return "Successfully deleted product";
+            return { status: true, message: "Successfully deleted product" };
         } else {
-            return "Product not found";
+            return { status: false, message: "Product not found" };
         }
     };
 }
