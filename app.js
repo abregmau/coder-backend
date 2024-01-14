@@ -1,8 +1,14 @@
 import express from "express";
+import morganScript from "./src/utils/loggers/accessLog.js";
+import logger from "./src/utils/loggers/errorLog.js";
+
 import { productRouter } from "./src/router/product.routes.js";
 import { cartRouter } from "./src/router/cart.routes.js";
 
 const app = express();
+
+// Configure morgan to use the write stream for logging
+app.use(morganScript);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
