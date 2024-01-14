@@ -10,6 +10,9 @@ const app = express();
 // Configure morgan to use the write stream for logging
 app.use(morganScript);
 
+app.use("/public", express.static("public"));
+app.use("/logs", express.static("logs"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
