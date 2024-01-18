@@ -1,1 +1,12 @@
-[{"id":"_sN94Cxe","products":[{"id":"WQqLnbud","quantity":9},{"id":"y8AzwvgB","quantity":4}]},{"id":"35kloauZ","products":[]},{"id":"PYj_m_iq","products":[]},{"id":"y0Sr5v5M","products":[]}]
+[
+    {
+        "id": "_sN94Cxe",
+        "products": [
+            { "id": "WQqLnbud", "quantity": 9 },
+            { "id": "y8AzwvgB", "quantity": 4 }
+        ]
+    },
+    { "id": "35kloauZ", "products": [] },
+    { "id": "PYj_m_iq", "products": [] },
+    { "id": "y0Sr5v5M", "products": [] }
+]

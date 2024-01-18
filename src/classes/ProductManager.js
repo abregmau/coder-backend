@@ -52,33 +52,50 @@ export default class ProductManager {
         }
     };
 
-    addProduct = async (title, description, price, thumbnail, code, stock) => {
+    addProduct = async (
+        title,
+        description,
+        code,
+        price,
+        status,
+        stock,
+        category,
+        thumbnail
+    ) => {
         await this.checkLoadedFile();
 
         // Validations
         if (
             !title ||
             !description ||
-            !price ||
-            !thumbnail ||
             !code ||
             isNaN(price) ||
-            isNaN(stock)
+            isNaN(stock) ||
+            !category
         ) {
             return {
                 status: false,
-                message:
-                    "Error: All fields are mandatory, and 'price' and 'stock' must be numbers.",
+                message: "Error: Check required fields.",
             };
+        }
+
+        if (this.products.find((product) => product.code === code)) {
+            return { status: false, message: "Code already exists" };
+        }
+
+        if (!(typeof status === "boolean")) {
+            status = true;
         }
 
         let newProduct = {
             title,
             description,
-            price: parseFloat(price), // Convert to a number
-            thumbnail,
             code,
+            price: parseFloat(price), // Convert to a number
+            status,
             stock: parseInt(stock), // Convert to an integer
+            category,
+            thumbnail,
             id: nanoid(8),
         };
         this.products.push(newProduct);

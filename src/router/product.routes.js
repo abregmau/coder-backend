@@ -36,10 +36,12 @@ productRouter.post("/", async (req, res) => {
         const addedProduct = await products.addProduct(
             newProduct.title,
             newProduct.description,
-            newProduct.price,
-            newProduct.thumbnail,
             newProduct.code,
-            newProduct.stock
+            newProduct.price,
+            newProduct.status,
+            newProduct.stock,
+            newProduct.category,
+            newProduct.thumbnail
         );
         if (addedProduct.status === true) {
             res.send(addedProduct.message);
