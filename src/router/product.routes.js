@@ -1,4 +1,5 @@
 import { Router } from "express";
+import logger from "../utils/loggers/errorLog.js";
 import ProductManager from "../classes/ProductManager.js";
 
 const productRouter = Router();
