@@ -2,15 +2,16 @@
     "name": "coder-backend",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
-        "dev": "nodemon app.js",
-        "start": "node app.js"
+        "dev": "nodemon ./src/app.js",
+        "start": "node ./src/app.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "express": "^4.18.2",
+        "express-handlebars": "^7.1.2",
         "morgan": "^1.10.0",
         "nanoid": "^5.0.4",
         "winston": "^3.11.0"

@@ -2,7 +2,7 @@ import morgan from "morgan";
 import fs from "fs";
 
 // Create a write stream to save logs to a file
-const accessLogStream = fs.createWriteStream("./logs/access.log", {
+const accessLogStream = fs.createWriteStream("./src/logs/access.log", {
     flags: "a",
 });
 
