@@ -4,7 +4,7 @@ import { products } from "./product.routes.js";
 const viewRouter = Router();
 
 viewRouter.get("/", async (req, res) => {
-    res.render("home", {
+    res.render("index", {
         title: "Advanced Express | Handlebars",
         products: await products.getProducts(),
     });
