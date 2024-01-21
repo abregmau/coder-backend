@@ -3,8 +3,16 @@ import { products } from "./product.routes.js";
 
 const viewRouter = Router();
 
+viewRouter.get("/chat", async (req, res) => {
+    res.render("chatTest", {
+        script: "chatTest.js",
+        title: "Chat Test | Websockets",
+    });
+});
+
 viewRouter.get("/", async (req, res) => {
-    res.render("index", {
+    res.render("home", {
+        script: "home.js",
         title: "Advanced Express | Handlebars",
         products: await products.getProducts(),
     });
