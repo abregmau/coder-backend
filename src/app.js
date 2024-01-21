@@ -1,6 +1,6 @@
 import express from "express";
-import { engine } from "express-handlebars";
-import __dirname from "./util.js";
+import handlebars from "express-handlebars";
+import __dirname from "./utils/functions/utils.js";
 import * as path from "path";
 
 import morganScript from "./utils/loggers/accessLog.js";
@@ -23,7 +23,7 @@ app.use("/", express.static(__dirname + "/public"));
 app.use("/logs", express.static(__dirname + "/logs"));
 
 // Handlebars
-app.engine("handlebars", engine());
+app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname + "/views"));
 
