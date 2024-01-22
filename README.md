@@ -18,21 +18,22 @@
   </p>
 </p>
 
-![Downloads](https://img.shields.io/github/downloads/abregmau/coder-backend/total) ![Contributors](https://img.shields.io/github/contributors/abregmau/coder-backend?color=dark-green) ![Issues](https://img.shields.io/github/issues/abregmau/coder-backend) ![License](https://img.shields.io/github/license/abregmau/coder-backend) 
+![Downloads](https://img.shields.io/github/downloads/abregmau/coder-backend/total) ![Contributors](https://img.shields.io/github/contributors/abregmau/coder-backend?color=dark-green) ![Issues](https://img.shields.io/github/issues/abregmau/coder-backend) ![License](https://img.shields.io/github/license/abregmau/coder-backend)
 
 ## Table Of Contents
 
-* [About the Project](#about-the-project)
-* [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
+-   [About the Project](#about-the-project)
+-   [Built With](#built-with)
+-   [Getting Started](#getting-started)
+    -   [Prerequisites](#prerequisites)
+    -   [Installation](#installation)
+-   [Usage](#usage)
+-   [Endpoints for testing](#endpoints for testing)
+-   [Roadmap](#roadmap)
+-   [Contributing](#contributing)
+-   [License](#license)
+-   [Authors](#authors)
+-   [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
@@ -54,7 +55,7 @@ In edition
 
 This is an example of how to list things you need to use the software and how to install them.
 
-* npm
+-   npm
 
 ```sh
 npm install npm@latest -g
@@ -82,17 +83,33 @@ npm run start
 
 ## Endpoints for testing
 
-Local:
+API Local:
 
 http://localhost:8080/api/products
 
 http://localhost:8080/api/products
 
-Online witch Render:
+WebSocket Local:
+
+http://localhost:8080/realtimeproducts
+
+Static Web Local:
+
+http://localhost:8080/
+
+API Online witch Render:
 
 https://coder-backend-hizt.onrender.com/api/products
 
 https://coder-backend-hizt.onrender.com/api/carts
+
+WebSocket witch Render:
+
+https://coder-backend-hizt.onrender.com/realtimeproducts
+
+Static Web witch Render:
+
+https://coder-backend-hizt.onrender.com/
 
 ## Roadmap
 
@@ -101,10 +118,11 @@ See the [open issues](https://github.com/abregmau/coder-backend/issues) for a li
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/abregmau/coder-backend/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
-* Please make sure you check your spelling and grammar.
-* Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/abregmau/coder-backend/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
+
+-   If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/abregmau/coder-backend/issues/new) to discuss it, or directly create a pull request after you edit the _README.md_ file with necessary changes.
+-   Please make sure you check your spelling and grammar.
+-   Create individual PR for each suggestion.
+-   Please also read through the [Code Of Conduct](https://github.com/abregmau/coder-backend/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 ### Creating A Pull Request
 
@@ -120,5 +138,4 @@ Distributed under the MIT License. See [LICENSE](https://github.com/abregmau/cod
 
 ## Authors
 
-* **Mauricio Abregú** - *Python and Full Stack Developer* - [Mauricio Abregú](https://github.com/abregmau/)
-
+-   **Mauricio Abregú** - _Python and Full Stack Developer_ - [Mauricio Abregú](https://github.com/abregmau/)
