@@ -1,5 +1,5 @@
 <h1>List of products</h1>
-<div class="product-container">
+<div id="product-container">
     {{#each products}}
         <div class="product">
             <h2>Title: {{this.title}}</h2>
@@ -12,7 +12,7 @@
             <p>Thumbnail:</p>
             <ul>
                 {{#each this.thumbnail}}
-                    <li><a href="{{this}}">{{this}}</a></li>
+                    <li><a href="{{this}}">Link {{@index}}</a></li>
                 {{/each}}
             </ul>
             <p>Id: {{this.id}}</p>

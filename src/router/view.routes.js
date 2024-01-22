@@ -3,10 +3,10 @@ import { products } from "./product.routes.js";
 
 const viewRouter = Router();
 
-viewRouter.get("/chat", async (req, res) => {
-    res.render("chatTest", {
-        script: "chatTest.js",
-        title: "Chat Test | Websockets",
+viewRouter.get("/realtimeproducts", async (req, res) => {
+    res.render("realTimeProducts", {
+        script: "realTimeProducts.js",
+        title: "Advanced Express | Socket",
     });
 });
 
@@ -18,10 +18,11 @@ viewRouter.get("/", async (req, res) => {
     });
 });
 
-viewRouter.get("/:id", async (req, res) => {
+viewRouter.get("/:pid", async (req, res) => {
     res.render("product", {
+        script: "home.js",
         title: "Advanced Express | Handlebars",
-        product: (await products.getProductById(req.params.id)).product,
+        product: (await products.getProductById(req.params.pid)).product,
     });
 });
 

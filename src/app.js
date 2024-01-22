@@ -1,8 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
-import __dirname from "./utils/functions/utils.js";
+import __dirname from "./utils/functions/patch.js";
 import * as path from "path";
-import { Server } from "socket.io";
 
 import morganScript from "./utils/loggers/accessLog.js";
 import logger from "./utils/loggers/errorLog.js";
@@ -10,8 +9,20 @@ import logger from "./utils/loggers/errorLog.js";
 import { productRouter } from "./router/product.routes.js";
 import { cartRouter } from "./router/cart.routes.js";
 import { viewRouter } from "./router/view.routes.js";
+import { socketClass } from "./utils/functions/socketLogic.js";
 
 const app = express();
+
+// HTTP Server
+const PORT = process.env.PORT || 8080;
+const httpServer = app.listen(PORT, () => {
+    logger.info(`Server Listening in port: ${httpServer.address().port}`);
+});
+httpServer.on("error", (error) => logger.error(`Server error: ${error}`));
+
+// WebSockets Server
+const socketServer = new socketClass(httpServer);
+socketServer.start();
 
 // Configure morgan to use the write stream for logging
 app.use(morganScript);
@@ -34,20 +45,4 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", viewRouter);
 
-// Server
-const PORT = process.env.PORT || 8080;
-const server = app.listen(PORT, () => {
-    logger.info(`Server Listening in port: ${server.address().port}`);
-});
-server.on("error", (error) => logger.error(`Server error: ${error}`));
-const io = new Server(server);
-
-io.on("connection", (socket) => {
-    console.log(`Connected client. Id: ${socket.id}`);
-    socket.on("disconnect", () => {
-        console.log("Disconnected client.");
-    });
-    socket.on("userConnection", (data) => {
-        console.log(data);
-    });
-});
+export { httpServer, socketServer };

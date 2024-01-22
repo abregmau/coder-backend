@@ -34,16 +34,7 @@ productRouter.get("/:pid", async (req, res) => {
 productRouter.post("/", async (req, res) => {
     try {
         const newProduct = req.body;
-        const addedProduct = await products.addProduct(
-            newProduct.title,
-            newProduct.description,
-            newProduct.code,
-            newProduct.price,
-            newProduct.status,
-            newProduct.stock,
-            newProduct.category,
-            newProduct.thumbnail
-        );
+        const addedProduct = await products.addProduct(newProduct);
         if (addedProduct.status === true) {
             res.send(addedProduct.message);
         } else {

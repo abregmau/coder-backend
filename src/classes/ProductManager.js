@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
+import { socketServer } from "../app.js";
 
 export default class ProductManager {
     constructor() {
@@ -26,6 +27,8 @@ export default class ProductManager {
     writeProductsToFile = async () => {
         try {
             await fs.writeFile(this.patch, JSON.stringify(this.products));
+            socketServer.io.sockets.emit("updateProducts", await this.getProducts());
+            return "Successfully wrote products";
         } catch (error) {
             return error;
         }
@@ -52,27 +55,20 @@ export default class ProductManager {
         }
     };
 
-    addProduct = async (
-        title,
-        description,
-        code,
-        price,
-        status,
-        stock,
-        category,
-        thumbnail
-    ) => {
+    addProduct = async (product) => {
+        let title = product.title;
+        let description = product.description;
+        let code = product.code;
+        let price = product.price;
+        let status = product.status;
+        let stock = product.stock;
+        let category = product.category;
+        let thumbnail = product.thumbnail;
+
         await this.checkLoadedFile();
 
         // Validations
-        if (
-            !title ||
-            !description ||
-            !code ||
-            isNaN(price) ||
-            isNaN(stock) ||
-            !category
-        ) {
+        if (!title || !description || !code || isNaN(price) || isNaN(stock) || !category) {
             return {
                 status: false,
                 message: "Error: Check required fields.",
@@ -106,9 +102,7 @@ export default class ProductManager {
     updateProduct = async (id, modifiedProduct) => {
         await this.checkLoadedFile();
         if (this.products.find((product) => product.id === id)) {
-            const index = this.products.findIndex(
-                (product) => product.id === id
-            );
+            const index = this.products.findIndex((product) => product.id === id);
             this.products[index] = {
                 ...this.products[index],
                 ...modifiedProduct,
@@ -123,9 +117,7 @@ export default class ProductManager {
     deleteProduct = async (id) => {
         await this.checkLoadedFile();
         if (this.products.find((product) => product.id === id)) {
-            this.products = this.products.filter(
-                (product) => product.id !== id
-            );
+            this.products = this.products.filter((product) => product.id !== id);
             await this.writeProductsToFile();
             return { status: true, message: "Successfully deleted product" };
         } else {

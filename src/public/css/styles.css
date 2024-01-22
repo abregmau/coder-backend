@@ -14,9 +14,10 @@ h1 {
   font-size: 24px;
   color: #333;
   margin-bottom: 16px;
+  text-align: center;
 }
 
-.product-container {
+#product-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -46,6 +47,7 @@ h1 {
   list-style: none;
   padding: 0;
   margin: 0;
+  font-size: 14px;
 }
 .product ul li {
   margin-bottom: 4px;
@@ -60,4 +62,57 @@ h1 {
 .product hr {
   margin-top: auto;
   margin-bottom: 12px;
+}
+
+#productForm {
+  width: 300px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#productForm label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+#productForm input {
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+#addProductBtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#addProductBtn:hover {
+  background-color: #45a049;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.deleteProductBtn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.deleteProductBtn:hover {
+  background-color: #c0392b;
 }

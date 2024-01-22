@@ -1,0 +1,26 @@
+<h1>Add Product</h1>
+<!-- Form new product -->
+<form id="productForm">
+    <label for="productTitle">Title:</label>
+    <input type="text" id="productTitle" name="productTitle" required />
+
+    <label for="productDescription">Description:</label>
+    <input type="text" id="productDescription" name="productDescription" required />
+
+    <label for="productCode">Code:</label>
+    <input type="text" id="productCode" name="productCode" required />
+
+    <label for="productPrice">Price:</label>
+    <input type="number" id="productPrice" name="productPrice" step="0.01" required />
+
+    <label for="productStock">Stock:</label>
+    <input type="number" id="productStock" name="productStock" required />
+
+    <label for="productCategory">Category:</label>
+    <input type="text" id="productCategory" name="productCategory" required />
+
+    <button type="submit" id="addProductBtn">Add Product</button>
+</form>
+
+<h1>List of products</h1>
+<div id="product-container"></div>
