@@ -9,7 +9,7 @@ import logger from "./utils/loggers/errorLog.js";
 import { productRouter } from "./router/product.routes.js";
 import { cartRouter } from "./router/cart.routes.js";
 import { viewRouter } from "./router/view.routes.js";
-import { socketClass } from "./utils/functions/socketLogic.js";
+import { socketClass } from "./classes/socketLogic.js";
 
 const app = express();
 

@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import { products } from "../../router/product.routes.js";
-import logger from "../../utils/loggers/errorLog.js";
+import { products } from "../router/product.routes.js";
+import logger from "../utils/loggers/errorLog.js";
 
 class socketClass {
     constructor(server) {
