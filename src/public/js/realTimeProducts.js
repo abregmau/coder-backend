@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         socket.emit("addProduct", productData);
+        Swal.fire({ title: "Product added successfully!", text: "", icon: "success" });
 
         productForm.reset();
     });
@@ -77,6 +78,7 @@ function updateProductList(products) {
             // Handle the delete operation
             const productId = this.getAttribute("data-product-id");
             socket.emit("deleteProduct", productId);
+            Swal.fire({ title: "Product deleted successfully", text: "", icon: "success" });
         });
     });
 }
