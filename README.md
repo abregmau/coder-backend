@@ -83,41 +83,6 @@ npm run start
 
 ## Endpoints for testing
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enlaces Locales y Online</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-
-</head>
 <body>
     <h2>Local Links:</h2>
     <ul>
@@ -126,7 +91,6 @@ npm run start
         <li>WebSocket: <a href="http://localhost:8080/realtimeproducts" target="_blank">http://localhost:8080/realtimeproducts</a></li>
         <li>Static Web: <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a></li>
     </ul>
-
     <h2>Online Links:</h2>
     <ul>
         <li>PI products: <a href="https://cheerful-abounding-indigo.glitch.me/api/products" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/products</a></li>
