@@ -93,9 +93,9 @@ npm run start
     </ul>
     <h2>Online Links:</h2>
     <ul>
-        <li>PI products: <a href="https://cheerful-abounding-indigo.glitch.me/api/products" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/products</a></li>
-        <li>PI products: <a href="https://cheerful-abounding-indigo.glitch.me/api/carts" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/carts</a></li>
-        <li>API carts: <a href="https://coder-backend-hizt.onrender.com/api/products" target="_blank">https://coder-backend-hizt.onrender.com/api/products</a></li>
+        <li>API products: <a href="https://cheerful-abounding-indigo.glitch.me/api/products" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/products</a></li>
+        <li>API carts: <a href="https://cheerful-abounding-indigo.glitch.me/api/carts" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/carts</a></li>
+        <li>API products: <a href="https://coder-backend-hizt.onrender.com/api/products" target="_blank">https://coder-backend-hizt.onrender.com/api/products</a></li>
         <li>API carts: <a href="https://coder-backend-hizt.onrender.com/api/carts" target="_blank">https://coder-backend-hizt.onrender.com/api/carts</a></li>
         <li>WebSocket: <a href="https://cheerful-abounding-indigo.glitch.me/realtimeproducts" target="_blank">https://cheerful-abounding-indigo.glitch.me/realtimeproducts</a></li>
         <li>WebSocket: <a href="https://coder-backend-hizt.onrender.com/realtimeproducts" target="_blank">https://coder-backend-hizt.onrender.com/realtimeproducts</a></li>
