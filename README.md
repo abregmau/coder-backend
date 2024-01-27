@@ -28,7 +28,7 @@
     -   [Prerequisites](#prerequisites)
     -   [Installation](#installation)
 -   [Usage](#usage)
--   [Endpoints for testing](#endpoints for testing)
+-   [Endpoints for testing](#endpoints-for-testing)
 -   [Roadmap](#roadmap)
 -   [Contributing](#contributing)
 -   [License](#license)
@@ -83,33 +83,64 @@ npm run start
 
 ## Endpoints for testing
 
-API Local:
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlaces Locales y Online</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
 
-http://localhost:8080/api/products
+        h2 {
+            color: #333;
+        }
 
-http://localhost:8080/api/products
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-WebSocket Local:
+        li {
+            margin-bottom: 10px;
+        }
 
-http://localhost:8080/realtimeproducts
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
 
-Static Web Local:
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 
-http://localhost:8080/
+</head>
+<body>
+    <h2>Local Links:</h2>
+    <ul>
+        <li>API products: <a href="http://localhost:8080/api/products" target="_blank">http://localhost:8080/api/products</a></li>
+        <li>API carts: <a href="http://localhost:8080/api/carts" target="_blank">http://localhost:8080/api/products</a></li>
+        <li>WebSocket: <a href="http://localhost:8080/realtimeproducts" target="_blank">http://localhost:8080/realtimeproducts</a></li>
+        <li>Static Web: <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a></li>
+    </ul>
 
-API Online witch Render:
+    <h2>Online Links:</h2>
+    <ul>
+        <li>PI products: <a href="https://cheerful-abounding-indigo.glitch.me/api/products" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/products</a></li>
+        <li>PI products: <a href="https://cheerful-abounding-indigo.glitch.me/api/carts" target="_blank">https://cheerful-abounding-indigo.glitch.me/api/carts</a></li>
+        <li>API carts: <a href="https://coder-backend-hizt.onrender.com/api/products" target="_blank">https://coder-backend-hizt.onrender.com/api/products</a></li>
+        <li>API carts: <a href="https://coder-backend-hizt.onrender.com/api/carts" target="_blank">https://coder-backend-hizt.onrender.com/api/carts</a></li>
+        <li>WebSocket: <a href="https://cheerful-abounding-indigo.glitch.me/realtimeproducts" target="_blank">https://cheerful-abounding-indigo.glitch.me/realtimeproducts</a></li>
+        <li>WebSocket: <a href="https://coder-backend-hizt.onrender.com/realtimeproducts" target="_blank">https://coder-backend-hizt.onrender.com/realtimeproducts</a></li>
+        <li>Static Web: <a href="https://cheerful-abounding-indigo.glitch.me/" target="_blank">https://cheerful-abounding-indigo.glitch.me/</a></li>
+        <li>Static Web: <a href="https://coder-backend-hizt.onrender.com/" target="_blank">https://coder-backend-hizt.onrender.com/</a></li>
+    </ul>
 
-https://coder-backend-hizt.onrender.com/api/products
-
-https://coder-backend-hizt.onrender.com/api/carts
-
-WebSocket witch Render:
-
-https://coder-backend-hizt.onrender.com/realtimeproducts
-
-Static Web witch Render:
-
-https://coder-backend-hizt.onrender.com/
+</body>
+</html>
 
 ## Roadmap
 
