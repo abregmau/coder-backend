@@ -1,5 +1,5 @@
 import { productModel } from "../models/products.model.js";
-import { socketServer } from "../app.js";
+import { socketServer } from "../../app.js";
 
 export default class ProductDao {
     constructor() {}

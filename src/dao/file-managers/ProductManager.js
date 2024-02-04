@@ -1,10 +1,10 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
-import { socketServer } from "../app.js";
+import { socketServer } from "../../app.js";
 
 export default class ProductManager {
     constructor() {
-        this.patch = "./src/models/products.json";
+        this.patch = "./src/dao/models/products.json";
         this.products = null;
     }
 

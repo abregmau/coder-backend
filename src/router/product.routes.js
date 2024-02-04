@@ -1,7 +1,7 @@
 import { Router } from "express";
 import logger from "../utils/loggers/errorLog.js";
-import ProductManager from "../classes/ProductManager.js";
-import ProductDao from "../dao/ProductDAO.js";
+import ProductManager from "../dao/file-managers/ProductManager.js";
+import ProductDao from "../dao/db-managers/ProductDao.js";
 
 const productRouter = Router();
 

@@ -1,10 +1,10 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
-import { products } from "../router/product.routes.js";
+import { products } from "../../router/product.routes.js";
 
 export default class CartManager {
     constructor() {
-        this.patch = "./src/models/carts.json";
+        this.patch = "./src/dao/models/carts.json";
         this.carts = null;
     }
 

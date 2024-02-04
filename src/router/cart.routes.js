@@ -1,7 +1,7 @@
 import { Router } from "express";
 import logger from "../utils/loggers/errorLog.js";
-import CartManager from "../classes/CartManager.js";
-import CartDao from "../dao/CartDao.js";
+import CartManager from "../dao/file-managers/CartManager.js";
+import CartDao from "../dao/db-managers/CartDao.js";
 
 const cartRouter = Router();
 
