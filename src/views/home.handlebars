@@ -15,7 +15,15 @@
                     <li><a href="{{this}}">Link {{@index}}</a></li>
                 {{/each}}
             </ul>
-            <p>Id: {{this.id}}</p>
+            <p>
+                {{#if this.id}}
+                    Id:
+                    {{this.id}}
+                {{else}}
+                    Id:
+                    {{this._id}}
+                {{/if}}
+            </p>
             <hr />
         </div>
     {{/each}}

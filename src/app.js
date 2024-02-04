@@ -2,6 +2,7 @@ import express from "express";
 import handlebars from "express-handlebars";
 import __dirname from "./utils/functions/patch.js";
 import * as path from "path";
+import mongoose from "mongoose";
 
 import morganScript from "./utils/loggers/accessLog.js";
 import logger from "./utils/loggers/errorLog.js";
@@ -12,6 +13,9 @@ import { viewRouter } from "./router/view.routes.js";
 import { socketClass } from "./classes/socketLogic.js";
 
 const app = express();
+
+// Database
+mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
 
 // HTTP Server
 const PORT = process.env.PORT || 8080;

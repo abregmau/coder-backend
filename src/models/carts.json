@@ -1,12 +1,8 @@
 [
     {
         "id": "_sN94Cxe",
-        "products": [
-            { "id": "I1qUkG6Q", "quantity": 9 },
-            { "id": "vaTM1lOA", "quantity": 4 }
-        ]
+        "products": [{ "id": "vaTM1lOA", "quantity": 4 }]
     },
     { "id": "35kloauZ", "products": [] },
-    { "id": "PYj_m_iq", "products": [] },
-    { "id": "y0Sr5v5M", "products": [] }
+    { "id": "PYj_m_iq", "products": [] }
 ]

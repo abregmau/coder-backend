@@ -47,9 +47,9 @@ export default class ProductManager {
 
     getProductById = async (id) => {
         await this.checkLoadedFile();
-        const productId = this.products.find((product) => product.id === id);
-        if (productId) {
-            return { status: true, product: productId };
+        const productFind = this.products.find((product) => product.id === id);
+        if (productFind) {
+            return { status: true, product: productFind };
         } else {
             return { status: false, message: "Product not found" };
         }

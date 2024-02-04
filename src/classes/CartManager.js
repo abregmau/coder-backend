@@ -62,6 +62,18 @@ export default class CartManager {
         return "Successfully added cart";
     };
 
+    deleteCart = async (id) => {
+        await this.checkLoadedFile();
+        const cartIndex = this.carts.findIndex((cart) => cart.id === id);
+        if (cartIndex === -1) {
+            return { status: false, message: "Cart not found" };
+        } else {
+            this.carts.splice(cartIndex, 1);
+            await this.writeCartsToFile();
+            return { status: true, message: "Successfully deleted cart" };
+        }
+    };
+
     addProductToCart = async (cid, pid) => {
         await this.checkLoadedFile();
 
@@ -74,9 +86,7 @@ export default class CartManager {
         if (cartIndex === -1) {
             return { status: false, message: "Cart not found" };
         } else {
-            const productIndex = this.carts[cartIndex].products.findIndex(
-                (product) => product.id === pid
-            );
+            const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
             if (productIndex === -1) {
                 this.carts[cartIndex].products.push({ id: pid, quantity: 1 });
                 await this.writeCartsToFile();
@@ -98,18 +108,25 @@ export default class CartManager {
         if (cartIndex === -1) {
             return { status: false, message: "Cart not found" };
         } else {
-            const productIndex = this.carts[cartIndex].products.findIndex(
-                (product) => product.id === pid
-            );
+            const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
             if (productIndex === -1) {
                 return { status: false, message: "Product not found" };
             } else {
-                this.carts[cartIndex].products.splice(productIndex, 1);
-                await this.writeCartsToFile();
-                return {
-                    status: true,
-                    message: "Successfully deleted product",
-                };
+                if (this.carts[cartIndex].products[productIndex].quantity > 1) {
+                    this.carts[cartIndex].products[productIndex].quantity--;
+                    await this.writeCartsToFile();
+                    return {
+                        status: true,
+                        message: "Successfully decreased quantity",
+                    };
+                } else {
+                    this.carts[cartIndex].products.splice(productIndex, 1);
+                    await this.writeCartsToFile();
+                    return {
+                        status: true,
+                        message: "Successfully deleted product",
+                    };
+                }
             }
         }
     };

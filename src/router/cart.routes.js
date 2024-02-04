@@ -1,9 +1,13 @@
 import { Router } from "express";
 import logger from "../utils/loggers/errorLog.js";
 import CartManager from "../classes/CartManager.js";
+import CartDao from "../dao/CartDao.js";
 
 const cartRouter = Router();
-const carts = new CartManager();
+
+// Uncomment File System or MongoDB
+// const carts = new CartManager();
+const carts = new CartDao();
 
 cartRouter.get("/", async (req, res) => {
     try {
@@ -29,6 +33,20 @@ cartRouter.post("/", async (req, res) => {
         // const newCart = req.body;
         const addedCart = await carts.addCart();
         res.send(addedCart);
+    } catch (error) {
+        logger.error(`Error while processing request: ${error}`);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+cartRouter.delete("/:cid", async (req, res) => {
+    try {
+        const deletedCart = await carts.deleteCart(req.params.cid);
+        if (deletedCart.status === true) {
+            res.send(deletedCart.message);
+        } else {
+            res.status(400).send(deletedCart.message);
+        }
     } catch (error) {
         logger.error(`Error while processing request: ${error}`);
         res.status(500).send("Internal Server Error");

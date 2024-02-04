@@ -1,9 +1,13 @@
 import { Router } from "express";
 import logger from "../utils/loggers/errorLog.js";
 import ProductManager from "../classes/ProductManager.js";
+import ProductDao from "../dao/ProductDAO.js";
 
 const productRouter = Router();
-const products = new ProductManager();
+
+// Uncomment File System or MongoDB
+// const products = new ProductManager();
+const products = new ProductDao();
 
 productRouter.get("/", async (req, res) => {
     try {
@@ -23,11 +27,16 @@ productRouter.get("/", async (req, res) => {
 });
 
 productRouter.get("/:pid", async (req, res) => {
-    let product = await products.getProductById(req.params.pid);
-    if (product.status === true) {
-        res.send(product.product);
-    } else {
-        res.status(400).send(product.message);
+    try {
+        const product = await products.getProductById(req.params.pid);
+        if (product.status === true) {
+            res.send(product.product);
+        } else {
+            res.status(400).send(product.message);
+        }
+    } catch (error) {
+        logger.error(`Error while processing request: ${error}`);
+        res.status(500).send("Internal Server Error");
     }
 });
 
@@ -62,10 +71,7 @@ productRouter.delete("/:pid", async (req, res) => {
 
 productRouter.put("/:pid", async (req, res) => {
     try {
-        const modifiedProduct = await products.updateProduct(
-            req.params.pid,
-            req.body
-        );
+        const modifiedProduct = await products.updateProduct(req.params.pid, req.body);
         if (modifiedProduct.status === true) {
             res.send(modifiedProduct.message);
         } else {
