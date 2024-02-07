@@ -11,14 +11,14 @@ import { productRouter } from "./router/product.routes.js";
 import { cartRouter } from "./router/cart.routes.js";
 import { viewRouter } from "./router/view.routes.js";
 import { socketClass } from "./utils/classes/socketLogic.js";
+import { MONGODB_URI, PORT } from "./utils/functions/config.js";
 
 const app = express();
 
 // Database
-mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+mongoose.connect(MONGODB_URI);
 
 // HTTP Server
-const PORT = process.env.PORT || 8080;
 const httpServer = app.listen(PORT, () => {
     logger.info(`Server Listening in port: ${httpServer.address().port}`);
 });
