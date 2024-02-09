@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io({ path: "/realtimeproducts" });
 
 // Listen for form submissions
 document.addEventListener("DOMContentLoaded", function () {

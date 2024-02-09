@@ -10,7 +10,8 @@ import logger from "./utils/loggers/errorLog.js";
 import { productRouter } from "./router/product.routes.js";
 import { cartRouter } from "./router/cart.routes.js";
 import { viewRouter } from "./router/view.routes.js";
-import { socketClass } from "./utils/classes/socketLogic.js";
+import { socketRealTime } from "./utils/classes/socketRealTime.js";
+import { socketChat } from "./utils/classes/socketChat.js";
 import { MONGODB_URI, PORT } from "./utils/functions/config.js";
 
 const app = express();
@@ -24,9 +25,13 @@ const httpServer = app.listen(PORT, () => {
 });
 httpServer.on("error", (error) => logger.error(`Server error: ${error}`));
 
-// WebSockets Server
-const socketServer = new socketClass(httpServer);
-socketServer.start();
+// RealTime Products WebSockets Server
+const rtSocketServer = new socketRealTime(httpServer, "/realtimeproducts");
+rtSocketServer.start();
+
+// Chat WebSockets Server
+const chatServer = new socketChat(httpServer, "/chat");
+chatServer.start();
 
 // Configure morgan to use the write stream for logging
 app.use(morganScript);
@@ -49,4 +54,4 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", viewRouter);
 
-export { httpServer, socketServer };
+export { httpServer, rtSocketServer };

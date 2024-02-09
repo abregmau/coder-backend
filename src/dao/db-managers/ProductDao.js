@@ -1,5 +1,5 @@
 import { productModel } from "../models/products.model.js";
-import { socketServer } from "../../app.js";
+import { rtSocketServer } from "../../app.js";
 
 export default class ProductDao {
     constructor() {}
@@ -50,7 +50,7 @@ export default class ProductDao {
         // Add product
         try {
             await productModel.create(product);
-            socketServer.io.sockets.emit("updateProducts", await this.getProducts());
+            rtSocketServer.io.sockets.emit("updateProducts", await this.getProducts());
             return { status: true, message: "Successfully added product" };
         } catch (error) {
             if (error.code === 11000 && error.keyPattern && error.keyPattern.code) {
@@ -66,7 +66,7 @@ export default class ProductDao {
         if (productFind) {
             try {
                 await productModel.updateOne({ _id: id }, modifiedProduct);
-                socketServer.io.sockets.emit("updateProducts", await this.getProducts());
+                rtSocketServer.io.sockets.emit("updateProducts", await this.getProducts());
                 return { status: true, message: "Successfully updated product" };
             } catch (error) {
                 return { status: false, message: "Error updating product: " + error.message };
@@ -79,7 +79,7 @@ export default class ProductDao {
     async deleteProduct(id) {
         const product = await productModel.findOneAndDelete({ _id: id });
         if (product) {
-            socketServer.io.sockets.emit("updateProducts", await this.getProducts());
+            rtSocketServer.io.sockets.emit("updateProducts", await this.getProducts());
             return { status: true, message: "Successfully deleted product" };
         } else {
             return { status: false, message: "Product not found" };

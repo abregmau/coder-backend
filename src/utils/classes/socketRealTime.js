@@ -2,18 +2,19 @@ import { Server } from "socket.io";
 import { products } from "../../router/product.routes.js";
 import logger from "../loggers/errorLog.js";
 
-class socketClass {
-    constructor(server) {
-        this.io = new Server(server);
+class socketRealTime {
+    constructor(server, path) {
+        this.io = new Server();
+        this.io.attach(server, { path: path });
     }
 
     async start() {
         this.io.on("connection", async (socket) => {
-            logger.info(`Connected client Id: ${socket.id}`);
+            logger.info(`Client connected to Realtime Products - Id: ${socket.id}`);
             socket.emit("updateProducts", await products.getProducts());
 
             socket.on("disconnect", () => {
-                logger.info(`Disconnected client Id: ${socket.id}`);
+                logger.info(`Disconnected client from Realtime Products - Id: ${socket.id}`);
             });
 
             socket.on("addProduct", async (product) => {
@@ -31,4 +32,4 @@ class socketClass {
     }
 }
 
-export { socketClass };
+export { socketRealTime };

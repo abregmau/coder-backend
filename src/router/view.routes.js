@@ -10,6 +10,13 @@ viewRouter.get("/realtimeproducts", async (req, res) => {
     });
 });
 
+viewRouter.get("/chat", async (req, res) => {
+    res.render("chat", {
+        script: "chat.js",
+        title: "Advanced Express | Web Chat",
+    });
+});
+
 viewRouter.get("/", async (req, res) => {
     res.render("home", {
         script: "home.js",

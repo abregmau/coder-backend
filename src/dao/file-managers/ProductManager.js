@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
-import { socketServer } from "../../app.js";
+import { rtSocketServer } from "../../app.js";
 
 export default class ProductManager {
     constructor() {
@@ -27,7 +27,7 @@ export default class ProductManager {
     writeProductsToFile = async () => {
         try {
             await fs.writeFile(this.patch, JSON.stringify(this.products));
-            socketServer.io.sockets.emit("updateProducts", await this.getProducts());
+            rtSocketServer.io.sockets.emit("updateProducts", await this.getProducts());
             return "Successfully wrote products";
         } catch (error) {
             return error;
