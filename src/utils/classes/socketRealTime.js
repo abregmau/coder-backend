@@ -11,7 +11,7 @@ class socketRealTime {
     async start() {
         this.io.on("connection", async (socket) => {
             logger.info(`Client connected to Realtime Products - Id: ${socket.id}`);
-            socket.emit("updateProducts", await products.getProducts());
+            socket.emit("updateProducts", (await products.getProducts()).payload);
 
             socket.on("disconnect", () => {
                 logger.info(`Disconnected client from Realtime Products - Id: ${socket.id}`);

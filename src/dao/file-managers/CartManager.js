@@ -40,94 +40,116 @@ export default class CartManager {
     };
 
     getCarts = async () => {
-        await this.checkLoadedFile();
-        return this.carts;
+        try {
+            await this.checkLoadedFile();
+            return { status: "success", payload: this.carts };
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
     };
 
     getCartById = async (id) => {
-        await this.checkLoadedFile();
-        const cartId = this.carts.find((cart) => cart.id === id);
-        if (cartId) {
-            return { status: true, cart: cartId };
-        } else {
-            return { status: false, message: "Cart not found" };
+        try {
+            await this.checkLoadedFile();
+            const cartId = this.carts.find((cart) => cart.id === id);
+            if (cartId) {
+                return { status: "success", payload: cartId };
+            } else {
+                return { status: "badRequest", message: "Cart not found" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     };
 
     addCart = async () => {
-        await this.checkLoadedFile();
-        let newCartWithId = { id: nanoid(8), products: [] };
-        this.carts.push(newCartWithId);
-        await this.writeCartsToFile();
-        return "Successfully added cart";
+        try {
+            await this.checkLoadedFile();
+            let newCartWithId = { id: nanoid(8), products: [] };
+            this.carts.push(newCartWithId);
+            await this.writeCartsToFile();
+            return { status: "success", message: "Successfully added cart" };
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
     };
 
     deleteCart = async (id) => {
-        await this.checkLoadedFile();
-        const cartIndex = this.carts.findIndex((cart) => cart.id === id);
-        if (cartIndex === -1) {
-            return { status: false, message: "Cart not found" };
-        } else {
-            this.carts.splice(cartIndex, 1);
-            await this.writeCartsToFile();
-            return { status: true, message: "Successfully deleted cart" };
+        try {
+            await this.checkLoadedFile();
+            const cartIndex = this.carts.findIndex((cart) => cart.id === id);
+            if (cartIndex === -1) {
+                return { status: "badRequest", message: "Cart not found" };
+            } else {
+                this.carts.splice(cartIndex, 1);
+                await this.writeCartsToFile();
+                return { status: "success", message: "Successfully deleted cart" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     };
 
     addProductToCart = async (cid, pid) => {
-        await this.checkLoadedFile();
+        try {
+            await this.checkLoadedFile();
 
-        let checkId = await products.getProductById(pid);
-        if (checkId.status === false) {
-            return { status: false, message: "Product not found in database" };
-        }
-
-        const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
-        if (cartIndex === -1) {
-            return { status: false, message: "Cart not found" };
-        } else {
-            const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
-            if (productIndex === -1) {
-                this.carts[cartIndex].products.push({ id: pid, quantity: 1 });
-                await this.writeCartsToFile();
-                return { status: true, message: "Successfully added product" };
-            } else {
-                this.carts[cartIndex].products[productIndex].quantity++;
-                await this.writeCartsToFile();
-                return {
-                    status: true,
-                    message: "Successfully increased quantity",
-                };
+            let checkId = await products.getProductById(pid);
+            if (checkId.status === "badRequest") {
+                return { status: "badRequest", message: "Product not found in database" };
             }
+
+            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            if (cartIndex === -1) {
+                return { status: "badRequest", message: "Cart not found" };
+            } else {
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                if (productIndex === -1) {
+                    this.carts[cartIndex].products.push({ id: pid, quantity: 1 });
+                    await this.writeCartsToFile();
+                    return { status: "success", message: "Successfully added product" };
+                } else {
+                    this.carts[cartIndex].products[productIndex].quantity++;
+                    await this.writeCartsToFile();
+                    return {
+                        status: "success",
+                        message: "Successfully increased quantity",
+                    };
+                }
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     };
 
     delProductFromCart = async (cid, pid) => {
-        await this.checkLoadedFile();
-        const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
-        if (cartIndex === -1) {
-            return { status: false, message: "Cart not found" };
-        } else {
-            const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
-            if (productIndex === -1) {
-                return { status: false, message: "Product not found" };
+        try {
+            await this.checkLoadedFile();
+            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            if (cartIndex === -1) {
+                return { status: "badRequest", message: "Cart not found" };
             } else {
-                if (this.carts[cartIndex].products[productIndex].quantity > 1) {
-                    this.carts[cartIndex].products[productIndex].quantity--;
-                    await this.writeCartsToFile();
-                    return {
-                        status: true,
-                        message: "Successfully decreased quantity",
-                    };
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                if (productIndex === -1) {
+                    return { status: "badRequest", message: "Product not found" };
                 } else {
-                    this.carts[cartIndex].products.splice(productIndex, 1);
-                    await this.writeCartsToFile();
-                    return {
-                        status: true,
-                        message: "Successfully deleted product",
-                    };
+                    if (this.carts[cartIndex].products[productIndex].quantity > 1) {
+                        this.carts[cartIndex].products[productIndex].quantity--;
+                        await this.writeCartsToFile();
+                        return {
+                            status: "success",
+                            message: "Successfully decreased quantity",
+                        };
+                    } else {
+                        this.carts[cartIndex].products.splice(productIndex, 1);
+                        await this.writeCartsToFile();
+                        return {
+                            status: "success",
+                            message: "Successfully deleted product",
+                        };
+                    }
                 }
             }
-        }
+        } catch (error) {}
     };
 }

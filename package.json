@@ -5,7 +5,7 @@
     "main": "app.js",
     "scripts": {
         "sass-watch": "sass --no-source-map --watch ./src/sass/styles.scss ./src/public/css/styles.css",
-        "nodemon-watch": "nodemon --ignore ./src/models/carts.json --ignore ./src/models/products.json ./src/app.js",
+        "nodemon-watch": "nodemon --ignore ./src/dao/models/carts.json --ignore ./src/dao/models/products.json ./src/app.js",
         "dev": "npm-run-all --parallel sass-watch nodemon-watch",
         "start": "node ./src/app.js"
     },

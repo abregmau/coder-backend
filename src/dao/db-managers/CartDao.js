@@ -5,77 +5,100 @@ export default class CartDao {
     constructor() {}
 
     async getCarts() {
-        const carts = await cartModel.find().lean();
-        return carts;
+        try {
+            const carts = await cartModel.find().lean();
+            return { status: "success", payload: carts };
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
     }
 
     async getCartById(id) {
-        const cart = await cartModel.findById(id).lean();
-        if (cart) {
-            return { status: true, cart };
-        } else {
-            return { status: false, message: "Cart not found" };
+        try {
+            const cart = await cartModel.findById(id).lean();
+            if (cart) {
+                return { status: "success", payload: cart };
+            } else {
+                return { status: "badRequest", message: "Cart not found" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     }
 
     async addCart() {
-        await cartModel.create({ products: [] });
-        return "Successfully added cart";
+        try {
+            await cartModel.create({ products: [] });
+            return { status: "success", message: "Successfully added cart" };
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
     }
 
     async deleteCart(id) {
-        const cart = await cartModel.findByIdAndDelete(id);
-        if (cart) {
-            return { status: true, message: "Successfully deleted cart" };
-        } else {
-            return { status: false, message: "Cart not found" };
+        try {
+            const cart = await cartModel.findByIdAndDelete(id);
+            if (cart) {
+                return { status: "success", message: "Successfully deleted cart" };
+            } else {
+                return { status: "badRequest", message: "Cart not found" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     }
 
     async addProductToCart(cid, pid) {
-        let checkId = await products.getProductById(pid);
-        if (checkId.status === false) {
-            return { status: false, message: "Product not found in database" };
-        }
-
-        const cart = await cartModel.findById(cid);
-
-        if (cart) {
-            const existingProductIndex = cart.products.findIndex((product) => product.id === pid);
-
-            if (existingProductIndex !== -1) {
-                cart.products[existingProductIndex].quantity += 1;
-                await cart.save();
-                return { status: true, message: "Successfully increased quantity" };
-            } else {
-                cart.products.push({ _id: pid, quantity: 1 });
-                await cart.save();
-                return { status: true, message: "Successfully added product" };
+        try {
+            const checkId = await products.getProductById(pid);
+            if (checkId.status !== "success") {
+                return { status: "badRequest", message: "Product not found in database" };
             }
-        } else {
-            return { status: false, message: "Cart not found" };
+
+            const cart = await cartModel.findById(cid);
+            if (cart) {
+                const existingProductIndex = cart.products.findIndex((product) => product.id === pid);
+
+                if (existingProductIndex !== -1) {
+                    cart.products[existingProductIndex].quantity += 1;
+                    await cart.save();
+                    return { status: "success", message: "Successfully increased quantity" };
+                } else {
+                    cart.products.push({ _id: pid, quantity: 1 });
+                    await cart.save();
+                    return { status: "success", message: "Successfully added product" };
+                }
+            } else {
+                return { status: "badRequest", message: "Cart not found" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     }
 
     async delProductFromCart(cid, pid) {
-        const cart = await cartModel.findById(cid);
+        try {
+            const cart = await cartModel.findById(cid);
 
-        if (cart) {
-            const existingProductIndex = cart.products.findIndex((product) => product.id === pid);
+            if (cart) {
+                const existingProductIndex = cart.products.findIndex((product) => product.id === pid);
 
-            if (existingProductIndex !== -1) {
-                if (cart.products[existingProductIndex].quantity > 1) {
-                    cart.products[existingProductIndex].quantity -= 1;
-                    await cart.save();
-                    return { status: true, message: "Successfully decreased quantity" };
+                if (existingProductIndex !== -1) {
+                    if (cart.products[existingProductIndex].quantity > 1) {
+                        cart.products[existingProductIndex].quantity -= 1;
+                        await cart.save();
+                        return { status: "success", message: "Successfully decreased quantity" };
+                    } else {
+                        cart.products.splice(existingProductIndex, 1);
+                        await cart.save();
+                        return { status: "success", message: "Successfully deleted product" };
+                    }
                 } else {
-                    cart.products.splice(existingProductIndex, 1);
-                    await cart.save();
-                    return { status: true, message: "Successfully deleted product" };
+                    return { status: "badRequest", message: "Product not found in cart" };
                 }
-            } else {
-                return { status: false, message: "Product not found in cart" };
             }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
         }
     }
 }
