@@ -150,6 +150,32 @@ export default class CartManager {
                     }
                 }
             }
-        } catch (error) {}
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
+    };
+
+    updateProductInCart = async (cid, pid, body) => {
+        try {
+            await this.checkLoadedFile();
+            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            if (cartIndex === -1) {
+                return { status: "badRequest", message: "Cart not found" };
+            } else {
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                if (productIndex === -1) {
+                    return { status: "badRequest", message: "Product not found" };
+                } else {
+                    this.carts[cartIndex].products[productIndex].quantity = body.quantity;
+                    await this.writeCartsToFile();
+                    return {
+                        status: "success",
+                        message: "Successfully updated quantity",
+                    };
+                }
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
     };
 }
