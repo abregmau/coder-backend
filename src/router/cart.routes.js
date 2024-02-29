@@ -41,6 +41,17 @@ cartRouter.post("/", async (req, res) => {
     }
 });
 
+cartRouter.put("/:cid", async (req, res) => {
+    const modifiedCart = await carts.updateCart(req.params.cid, req.body);
+    if (modifiedCart.status === "success") {
+        res.send(modifiedCart);
+    } else if (modifiedCart.status === "badRequest") {
+        res.status(400).send(modifiedCart);
+    } else {
+        res.status(500).send(modifiedCart);
+    }
+});
+
 cartRouter.delete("/:cid", async (req, res) => {
     const deletedCart = await carts.deleteCart(req.params.cid);
     if (deletedCart.status === "success") {
@@ -61,6 +72,18 @@ cartRouter.post("/:cid/products/:pid", async (req, res) => {
         res.status(400).send(addedProduct);
     } else {
         res.status(500).send(addedProduct);
+    }
+});
+
+cartRouter.put("/:cid/products/:pid", async (req, res) => {
+    const { cid, pid } = req.params;
+    const modifiedProduct = await carts.updateProductInCart(cid, pid, req.body);
+    if (modifiedProduct.status === "success") {
+        res.send(modifiedProduct);
+    } else if (modifiedProduct.status === "badRequest") {
+        res.status(400).send(modifiedProduct);
+    } else {
+        res.status(500).send(modifiedProduct);
     }
 });
 
