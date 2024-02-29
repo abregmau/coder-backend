@@ -6,7 +6,7 @@ export default class CartDao {
 
     async getCarts() {
         try {
-            const carts = await cartModel.find().lean();
+            const carts = await cartModel.find().populate("products._id").lean();
             return { status: "success", payload: carts };
         } catch (error) {
             return { status: "error", message: "Internal Server Error" };
