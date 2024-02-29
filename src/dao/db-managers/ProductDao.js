@@ -30,14 +30,15 @@ export default class ProductDao {
                 products = products.filter((product) => product.status === available);
             }
 
-            if (limit) {
-                if (page) {
-                    const startIndex = (page - 1) * limit;
-                    const endIndex = page * limit;
-                    products = products.slice(startIndex, endIndex);
-                } else {
-                    products = products.slice(0, limit);
-                }
+            if (!limit) {
+                limit = 10;
+            }
+            if (page) {
+                const startIndex = (page - 1) * limit;
+                const endIndex = page * limit;
+                products = products.slice(startIndex, endIndex);
+            } else {
+                products = products.slice(0, limit);
             }
 
             let response = {
