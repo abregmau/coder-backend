@@ -15,7 +15,7 @@ export default class CartDao {
 
     async getCartById(id) {
         try {
-            const cart = await cartModel.findById(id).lean();
+            const cart = await cartModel.findById(id).populate("products._id").lean();
             if (cart) {
                 return { status: "success", payload: cart };
             } else {
