@@ -10,6 +10,7 @@ import logger from "./utils/loggers/errorLog.js";
 import { productRouter } from "./router/product.routes.js";
 import { cartRouter } from "./router/cart.routes.js";
 import { viewRouter } from "./router/view.routes.js";
+import { sessionRouter } from "./router/session.routes.js";
 import { socketRealTime } from "./utils/classes/socketRealTime.js";
 import { socketChat } from "./utils/classes/socketChat.js";
 import { MONGODB_URI, PORT } from "./utils/functions/config.js";
@@ -53,5 +54,6 @@ app.set("views", path.resolve(__dirname + "/views"));
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", viewRouter);
+app.use("/", sessionRouter);
 
 export { httpServer, rtSocketServer };
