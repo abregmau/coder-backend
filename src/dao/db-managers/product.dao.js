@@ -1,4 +1,4 @@
-import { productModel } from "../models/products.model.js";
+import { productModel } from "../schemas/products.schema.js";
 import { rtSocketServer } from "../../app.js";
 import logger from "../../utils/loggers/errorLog.js";
 

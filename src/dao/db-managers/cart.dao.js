@@ -1,4 +1,4 @@
-import { cartModel } from "../models/carts.model.js";
+import { cartModel } from "../schemas/carts.schema.js";
 import { products } from "../../router/product.routes.js";
 
 export default class CartDao {

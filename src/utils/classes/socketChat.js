@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import logger from "../loggers/errorLog.js";
-import { messageModel } from "../../dao/models/messages.model.js";
+import { messageModel } from "../../dao/schemas/messages.schema.js";
 
 class socketChat {
     constructor(server, path) {
