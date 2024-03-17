@@ -72,7 +72,6 @@ viewRouter.get("/chat", async (req, res) => {
 viewRouter.get("/products", async (req, res) => {
     const readProducts = await products.getProducts(req.query);
     const user = await UsersDao.getUserByID(req.session.user);
-    console.log(user);
 
     if (readProducts.status === "success") {
         res.render("products", {
