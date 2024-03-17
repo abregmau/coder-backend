@@ -1,3 +1,12 @@
+<h1>Bienvenido: {{user.firstName}} {{user.lastName}}</h1>
+<p>Email: {{user.email}}</p>
+{{#if user.isAdmin}}
+    <p>Rol: Administrator</p>
+{{else}}
+    <p>Rol: User</p>
+{{/if}}
+<a href="/api/session/logout">Logout</a>
+
 <h1>List of products</h1>
 <div id="product-container">
     {{#each products}}

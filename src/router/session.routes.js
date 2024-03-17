@@ -7,10 +7,9 @@ sessionRouter.post("/register", async (req, res) => {
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let email = req.body.email;
-    let age = parseInt(req.body.age);
     let password = req.body.password;
 
-    if (!firstName || !lastName || !email || !age || !password) {
+    if (!firstName || !lastName || !email || !password) {
         res.redirect("/register?status=10");
         return;
     }
@@ -20,7 +19,7 @@ sessionRouter.post("/register", async (req, res) => {
         res.redirect("/register?status=11");
         return;
     } else {
-        await UsersDao.createUser(firstName, lastName, age, email, password);
+        await UsersDao.createUser(firstName, lastName, email, password);
         res.redirect("/login?status=0");
     }
 });
@@ -39,7 +38,7 @@ sessionRouter.post("/login", async (req, res) => {
         res.redirect("/login?status=12");
     } else {
         req.session.user = user._id;
-        res.redirect("/profile?status=1");
+        res.redirect("/products");
     }
 });
 

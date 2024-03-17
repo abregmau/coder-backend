@@ -1,4 +1,4 @@
-import users from "../schemas/user.schema.js";
+import users from "../schemas/users.schema.js";
 
 class UsersDao {
     static async getUserByEmail(email) {
@@ -9,12 +9,12 @@ class UsersDao {
         return await users.findOne({ email: email, password: password });
     }
 
-    static async createUser(firstName, lastName, age, email, password) {
-        return await new users({ firstName, lastName, age, email, password }).save();
+    static async createUser(firstName, lastName, email, password) {
+        return await new users({ firstName, lastName, email, password }).save();
     }
 
     static async getUserByID(id) {
-        return await users.findOne({ _id: id }, { first_name: 1, last_name: 1, age: 1, email: 1 }).lean();
+        return await users.findOne({ _id: id }, { firstName: 1, lastName: 1, email: 1, isAdmin: 1 }).lean();
     }
 }
 
