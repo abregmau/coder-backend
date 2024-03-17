@@ -3,6 +3,9 @@ import handlebars from "express-handlebars";
 import __dirname from "./utils/functions/patch.js";
 import * as path from "path";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import morganScript from "./utils/loggers/accessLog.js";
 import logger from "./utils/loggers/errorLog.js";
@@ -50,9 +53,31 @@ app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname + "/views"));
 
+// Cookies
+app.use(cookieParser());
+// sessionRouter.use(cookieParser("secretBackend"));
+
+// Session
+app.use(
+    session({
+        secret: "secretBackend",
+        resave: true,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: MONGODB_URI,
+            // mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+            ttl: 10000, // ttl: 15,
+        }),
+        cookie: {
+            maxAge: 600000,
+        },
+    })
+);
+
 // Routes
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/session", sessionRouter);
 app.use("/", viewRouter);
 app.use("/", sessionRouter);
 

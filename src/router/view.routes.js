@@ -1,20 +1,71 @@
 import { Router } from "express";
 import { products } from "./product.routes.js";
 import { carts } from "./cart.routes.js";
+import UsersDao from "../dao/db-managers/users.dao.js";
 
 const viewRouter = Router();
+
+// Session Views
+
+viewRouter.get("/", async (req, res) => {
+    res.redirect("/home");
+});
+
+viewRouter.get("/home", async (req, res) => {
+    if (req.session.user) {
+        res.redirect("/profile");
+    } else {
+        res.render("home", {
+            script: "home.js",
+            title: "Home | Ecommerce",
+        });
+    }
+});
+
+viewRouter.get("/register", async (req, res) => {
+    res.render("register", {
+        script: "sessions.js",
+        title: "Register | Ecommerce",
+    });
+});
+
+viewRouter.get("/login", async (req, res) => {
+    if (req.session.user) {
+        res.redirect("/profile");
+    } else {
+        res.render("login", {
+            script: "sessions.js",
+            title: "Login | Ecommerce",
+        });
+    }
+});
+
+viewRouter.get("/profile", async (req, res) => {
+    if (req.session.user) {
+        const user = await UsersDao.getUserByID(req.session.user);
+        res.render("profile", {
+            script: "sessions.js",
+            title: "Profile | Ecommerce",
+            user: user,
+        });
+    } else {
+        res.redirect("/login");
+    }
+});
+
+// Other Views
 
 viewRouter.get("/realtimeproducts", async (req, res) => {
     res.render("realTimeProducts", {
         script: "realTimeProducts.js",
-        title: "Advanced Express | Socket",
+        title: "Live Products | Ecommerce",
     });
 });
 
 viewRouter.get("/chat", async (req, res) => {
     res.render("chat", {
         script: "chat.js",
-        title: "Advanced Express | Web Chat",
+        title: "Web Chat | Ecommerce",
     });
 });
 
@@ -24,7 +75,7 @@ viewRouter.get("/products", async (req, res) => {
     if (readProducts.status === "success") {
         res.render("products", {
             script: "products.js",
-            title: "Advanced Express | Handlebars",
+            title: "List of Products | Ecommerce",
             products: readProducts.payload,
         });
     } else {
