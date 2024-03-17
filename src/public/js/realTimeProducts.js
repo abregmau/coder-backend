@@ -64,9 +64,9 @@ function updateProductList(products) {
                     : "<li>No thumbnail available</li>"
             }
             </ul>
-            <p>Id: ${product.id ? product.id : product._id}</p>
+            <p>Id: ${product._id}</p>
             <hr />
-            <button class="deleteProductBtn" data-product-id="${product.id ? product.id : product._id}">Delete</button>
+            <button class="deleteProductBtn" data-product-id="${product._id}">Delete</button>
         `;
 
         // Append the product element to the container

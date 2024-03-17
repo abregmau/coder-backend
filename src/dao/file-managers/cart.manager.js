@@ -51,7 +51,7 @@ export default class CartManager {
     getCartById = async (id) => {
         try {
             await this.checkLoadedFile();
-            const cartId = this.carts.find((cart) => cart.id === id);
+            const cartId = this.carts.find((cart) => cart._id === id);
             if (cartId) {
                 return { status: "success", payload: cartId };
             } else {
@@ -65,7 +65,7 @@ export default class CartManager {
     addCart = async () => {
         try {
             await this.checkLoadedFile();
-            let newCartWithId = { id: nanoid(8), products: [] };
+            let newCartWithId = { _id: nanoid(8), products: [] };
             this.carts.push(newCartWithId);
             await this.writeCartsToFile();
             return { status: "success", message: "Successfully added cart" };
@@ -77,13 +77,29 @@ export default class CartManager {
     deleteCart = async (id) => {
         try {
             await this.checkLoadedFile();
-            const cartIndex = this.carts.findIndex((cart) => cart.id === id);
+            const cartIndex = this.carts.findIndex((cart) => cart._id === id);
             if (cartIndex === -1) {
                 return { status: "badRequest", message: "Cart not found" };
             } else {
                 this.carts.splice(cartIndex, 1);
                 await this.writeCartsToFile();
                 return { status: "success", message: "Successfully deleted cart" };
+            }
+        } catch (error) {
+            return { status: "error", message: "Internal Server Error" };
+        }
+    };
+
+    updateCart = async (id, cart) => {
+        try {
+            await this.checkLoadedFile();
+            const cartIndex = this.carts.findIndex((cart) => cart._id === id);
+            if (cartIndex === -1) {
+                return { status: "badRequest", message: "Cart not found" };
+            } else {
+                this.carts[cartIndex] = cart;
+                await this.writeCartsToFile();
+                return { status: "success", payload: this.carts[cartIndex] };
             }
         } catch (error) {
             return { status: "error", message: "Internal Server Error" };
@@ -99,13 +115,13 @@ export default class CartManager {
                 return { status: "badRequest", message: "Product not found in database" };
             }
 
-            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            const cartIndex = this.carts.findIndex((cart) => cart._id === cid);
             if (cartIndex === -1) {
                 return { status: "badRequest", message: "Cart not found" };
             } else {
-                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product._id === pid);
                 if (productIndex === -1) {
-                    this.carts[cartIndex].products.push({ id: pid, quantity: 1 });
+                    this.carts[cartIndex].products.push({ _id: pid, quantity: 1 });
                     await this.writeCartsToFile();
                     return { status: "success", message: "Successfully added product" };
                 } else {
@@ -125,11 +141,11 @@ export default class CartManager {
     delProductFromCart = async (cid, pid) => {
         try {
             await this.checkLoadedFile();
-            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            const cartIndex = this.carts.findIndex((cart) => cart._id === cid);
             if (cartIndex === -1) {
                 return { status: "badRequest", message: "Cart not found" };
             } else {
-                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product._id === pid);
                 if (productIndex === -1) {
                     return { status: "badRequest", message: "Product not found" };
                 } else {
@@ -158,11 +174,11 @@ export default class CartManager {
     updateProductInCart = async (cid, pid, body) => {
         try {
             await this.checkLoadedFile();
-            const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
+            const cartIndex = this.carts.findIndex((cart) => cart._id === cid);
             if (cartIndex === -1) {
                 return { status: "badRequest", message: "Cart not found" };
             } else {
-                const productIndex = this.carts[cartIndex].products.findIndex((product) => product.id === pid);
+                const productIndex = this.carts[cartIndex].products.findIndex((product) => product._id === pid);
                 if (productIndex === -1) {
                     return { status: "badRequest", message: "Product not found" };
                 } else {

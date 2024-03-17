@@ -15,15 +15,7 @@
                     <li><a href="{{this}}">Link {{@index}}</a></li>
                 {{/each}}
             </ul>
-            <p>
-                {{#if this.id}}
-                    Id:
-                    {{this.id}}
-                {{else}}
-                    Id:
-                    {{this._id}}
-                {{/if}}
-            </p>
+            <p>{{this._id}}</p>
             <hr />
             <button class="add-to-cart-btn" data-product-id="{{this._id}}">Add to Cart</button>
         </div>

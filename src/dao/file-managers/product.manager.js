@@ -101,7 +101,7 @@ export default class ProductManager {
     getProductById = async (id) => {
         try {
             await this.checkLoadedFile();
-            const productFind = this.products.find((product) => product.id === id);
+            const productFind = this.products.find((product) => product._id === id);
             if (productFind) {
                 return { status: "success", payload: productFind };
             } else {
@@ -151,7 +151,7 @@ export default class ProductManager {
                 stock: parseInt(stock), // Convert to an integer
                 category,
                 thumbnail,
-                id: nanoid(8),
+                _id: nanoid(8),
             };
             this.products.push(newProduct);
             await this.writeProductsToFile();
@@ -165,8 +165,8 @@ export default class ProductManager {
     updateProduct = async (id, modifiedProduct) => {
         try {
             await this.checkLoadedFile();
-            if (this.products.find((product) => product.id === id)) {
-                const index = this.products.findIndex((product) => product.id === id);
+            if (this.products.find((product) => product._id === id)) {
+                const index = this.products.findIndex((product) => product._id === id);
                 this.products[index] = {
                     ...this.products[index],
                     ...modifiedProduct,
@@ -185,11 +185,9 @@ export default class ProductManager {
     deleteProduct = async (id) => {
         try {
             await this.checkLoadedFile();
-            if (this.products.find((product) => product.id === id)) {
+            if (this.products.find((product) => product._id === id)) {
                 this.products = this.products.filter((product) => product.id !== id);
                 await this.writeProductsToFile();
-                let aa = await this.writeProductsToFile();
-                console.log(aa);
                 return { status: "success", message: "Successfully deleted product" };
             } else {
                 return { status: "badRequest", message: "Product not found" };
