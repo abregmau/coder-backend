@@ -5,9 +5,10 @@ class UsersDao {
         return await users.findOne({ email: email });
     }
 
-    static async getUserByCreds(email, password) {
-        return await users.findOne({ email: email, password: password });
-    }
+    // No sirve más al usar hash en el password
+    // static async getUserByCreds(email, password) {
+    //     return await users.findOne({ email: email, password: password });
+    // }
 
     static async createUser(firstName, lastName, email, password) {
         return await new users({ firstName, lastName, email, password }).save();

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UsersDao from "../dao/db-managers/users.dao.js";
+import { createHash, isValidPassword } from "../utils/functions/crypt.js";
 
 const sessionRouter = Router();
 
@@ -19,7 +20,7 @@ sessionRouter.post("/register", async (req, res) => {
         res.redirect("/register?status=11");
         return;
     } else {
-        await UsersDao.createUser(firstName, lastName, email, password);
+        await UsersDao.createUser(firstName, lastName, email, createHash(password));
         res.redirect("/login?status=0");
     }
 });
@@ -32,9 +33,9 @@ sessionRouter.post("/login", async (req, res) => {
         res.redirect("/login?status=10");
     }
 
-    let user = await UsersDao.getUserByCreds(email, password);
+    let user = await UsersDao.getUserByEmail(email);
 
-    if (!user) {
+    if (!isValidPassword(password, user?.password)) {
         res.redirect("/login?status=12");
     } else {
         req.session.user = user._id;
